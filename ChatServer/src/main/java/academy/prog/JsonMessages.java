@@ -9,7 +9,8 @@ public class JsonMessages {
     public JsonMessages(List<Message> sourceList, int fromIndex, String login) {
         for (int i = fromIndex; i < sourceList.size(); i++) {
             String currentTo = sourceList.get(i).getTo();
-            if (currentTo==null || currentTo.equals(login)) {
+            if (currentTo==null || currentTo.equals(login)||
+                    sourceList.get(i).getFrom().equals(login)) {
                 list.add(sourceList.get(i));
             }else{
                 list.add(null);

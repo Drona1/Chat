@@ -1,23 +1,25 @@
 package academy.prog;
 
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-
+@WebServlet("/add")
 public class AddServlet extends HttpServlet {
 
-	private MessageList msgList = MessageList.getInstance();
+	private final MessageList msgList = MessageList.getInstance();
+    private final Users users = Users.getInstance();
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		byte[] buf = requestBodyToArray(req); // json
+		byte[] buf = requestBodyToArray(req);
         String bufStr = new String(buf, StandardCharsets.UTF_8);
 
 		Message msg = Message.fromJSON(bufStr);
-		if (msg != null) {
+		if (msg != null &&  users.checkOnline(msg.getFrom())) {
                 msgList.add(msg);
         }else {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

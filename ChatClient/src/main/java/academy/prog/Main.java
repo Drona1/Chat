@@ -6,10 +6,11 @@ import java.util.*;
 
 public class Main {
     private static String login;
+
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
             login = Utils.getLogin(scanner);
-            if (login==null){
+            if (login == null) {
                 return;
             }
             Thread th = new Thread(new GetThread(login));
@@ -29,7 +30,7 @@ public class Main {
             }
         } catch (IOException ex) {
             ex.printStackTrace();
-        }finally {
+        } finally {
             try {
                 Utils.sendRequest("/status", "POST",
                         String.format("login=%s&status=%s", login, Status.OFFLINE));

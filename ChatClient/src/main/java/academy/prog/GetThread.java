@@ -27,7 +27,7 @@ public class GetThread implements Runnable {
         }
     }
 
-    private void printMessage(String messages){
+    private void printMessage(String messages) {
         JsonMessages list = gson.fromJson(messages, JsonMessages.class);
         if (list != null) {
             for (Message m : list.getList()) {
